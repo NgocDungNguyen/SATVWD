@@ -1,0 +1,120 @@
+<html>
+<head>
+    <title>SAT Vietnamese Women's Day Gift</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/react/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes bloom {
+            0% { transform: scale(0) rotate(-45deg); opacity: 0; }
+            100% { transform: scale(1) rotate(0); opacity: 1; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        .animate-bloom { animation: bloom 1.5s ease-out forwards; }
+        .animate-fade-in { animation: fadeIn 2s ease-out forwards; }
+        .animate-heartbeat { animation: heartbeat 1.5s ease-in-out infinite; }
+        .envelope {
+            background: linear-gradient(135deg, #FFB6C1 0%, #FF69B4 100%);
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
+        }
+        .letter {
+            background-color: #FFF0F5;
+            background-image: url("data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ff69b4' fill-opacity='0.1'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-pink-100 via-red-100 to-purple-100 min-h-screen flex items-center justify-center font-['Montserrat']">
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useRef, useEffect } = React;
+
+        const Flower = ({ color, delay, size, top, left }) => (
+            <svg className={`w-${size} h-${size} absolute animate-bloom`} style={{animationDelay: `${delay}s`, top: `${top}%`, left: `${left}%`}} viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50 0 C60 30 70 50 100 50 C70 60 60 80 50 100 C40 80 30 60 0 50 C30 40 40 20 50 0" fill={color} />
+                <circle cx="50" cy="50" r="10" fill="#FFD700" />
+            </svg>
+        );
+
+        function App() {
+            const [isOpen, setIsOpen] = useState(false);
+            const audioRef = useRef(null);
+
+            const poem = `
+                Roses are red, violets are blue,
+                SAT girls, we're so proud of you!
+                Your strength and grace light up every day,
+                Happy Women's Day, in every way!
+            `;
+
+            const wish = "May your day be filled with love, laughter, and all the joy you deserve. You make our club shine brighter!";
+
+            const flowerColors = ['#FF69B4', '#FF1493', '#FF00FF', '#BA55D3', '#9370DB'];
+
+            useEffect(() => {
+                if (isOpen && audioRef.current) {
+                    audioRef.current.play().catch(error => console.log("Audio playback failed:", error));
+                }
+            }, [isOpen]);
+
+            const handleEnvelopeClick = () => {
+                setIsOpen(true);
+            };
+
+            return (
+                <div className="relative w-full h-screen flex items-center justify-center p-4 overflow-hidden">
+                    <audio ref={audioRef} loop>
+                        <source src="LS.mp3" type="audio/mpeg" />
+                        Your browser does not support the audio element.
+                    </audio>
+                    {flowerColors.map((color, index) => (
+                        <Flower key={index} color={color} delay={index * 0.2} size={8 + index * 2} top={Math.random() * 100} left={Math.random() * 100} />
+                    ))}
+                    {!isOpen ? (
+                        <div className="text-center z-10 bg-white bg-opacity-90 p-8 rounded-3xl shadow-lg border-4 border-pink-300">
+                            <h1 className="text-5xl font-['Dancing_Script'] text-pink-600 mb-6 animate-float">Hey, SAT girls!</h1>
+                            <p className="text-2xl text-purple-600 mb-8 animate-heartbeat">I have a surprise for you. Click the envelope below! 💖</p>
+                            <div className="cursor-pointer envelope w-64 h-48 mx-auto rounded-2xl shadow-xl flex items-center justify-center transform hover:scale-105 transition-transform duration-300" onClick={handleEnvelopeClick}>
+                                <i className="fas fa-envelope-open-text text-6xl text-white animate-float"></i>
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="relative w-full max-w-2xl letter rounded-3xl shadow-2xl p-8 flex flex-col items-center justify-center animate-bloom">
+                            <div className="absolute top-0 left-0 w-full h-full bg-pink-100 opacity-50 rounded-3xl"></div>
+                            <div className="relative z-10 animate-fade-in">
+                                <h1 className="text-5xl sm:text-6xl font-bold text-center mb-8 font-['Dancing_Script'] text-pink-600">Happy Vietnamese Women's Day, SAT!</h1>
+                                <div className="w-3/4 mx-auto h-px bg-pink-300 mb-8"></div>
+                                <p className="text-2xl text-center mb-8 whitespace-pre-line font-['Dancing_Script'] text-purple-800">{poem}</p>
+                                <div className="w-3/4 mx-auto h-px bg-pink-300 mb-8"></div>
+                                <p className="text-xl text-center mb-8 text-pink-800">{wish}</p>
+                            </div>
+                            <div className="absolute bottom-0 left-0 w-full flex justify-around">
+                                {flowerColors.map((color, index) => (
+                                    <Flower key={index} color={color} delay={index * 0.2} size={6} top={90} left={index * 20 + 10} />
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
